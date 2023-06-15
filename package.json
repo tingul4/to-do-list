@@ -1,0 +1,17 @@
+{
+  "name": "to-do-list",
+  "version": "1.0.0",
+  "description": "It's a demo for practicing CRUD in AlphaCamp, Semester 2-3, S3",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
