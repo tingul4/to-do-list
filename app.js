@@ -1,12 +1,18 @@
-const express = require('express')
 const port = 3000
+const express = require('express')
+const app = express()
+
+const Todo = require('./models/todo.js')
+
+// use bodyParser to get post form data correctly
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended : true }))
 
 // get password from .env
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-const Todo = require('./models/todo.js')
-const app = express()
+
 // add handlebars 
 const exphbs = require('express-handlebars')
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: 'hbs' }))
@@ -34,6 +40,23 @@ app.get('/', (req, res) => {
       res.render('index', { todos })
     })
     .catch(error => console.error(error))
+})
+
+app.get('/todos/new', (req, res) => {
+  res.render('new')
+})
+
+app.post('/todos', (req, res) => {
+  const name = req.body.name
+  const todo = new Todo({ name })
+
+  return todo.save()
+          .then(() => {res.redirect('/')})
+          .catch(error => console.error(error))
+  // we can also use code below to create a new data
+  // return Todo.create({ name })
+  //         .then(() => {res.redirect('/')})
+  //         .catch(error => console.error(error))
 })
 
 app.listen(port, () => {
