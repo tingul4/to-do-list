@@ -1,12 +1,16 @@
 const express = require('express')
 const port = 3000
 
-// 
+// get password from .env
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
 const app = express()
+// add handlebars 
+const exphbs = require('express-handlebars')
+app.engine('hbs', exphbs({ defaultLayout: 'main', extname: 'hbs' }))
+app.set('view engine', 'hbs')
 
 const mongoose = require('mongoose')
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -23,7 +27,7 @@ db.once('open', () => {
 })
 
 app.get('/', (req, res) => {
-  res.send('It\'s a to-do list.')
+  res.render('index')
 })
 
 app.listen(port, () => {
