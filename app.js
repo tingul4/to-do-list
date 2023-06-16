@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== 'production') {
 const app = express()
 
 const mongoose = require('mongoose')
-mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // 取得資料庫連線狀態
 const db = mongoose.connection
