@@ -5,7 +5,7 @@ const port = 3000
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-
+const Todo = require('./models/todo.js')
 const app = express()
 // add handlebars 
 const exphbs = require('express-handlebars')
@@ -27,7 +27,13 @@ db.once('open', () => {
 })
 
 app.get('/', (req, res) => {
-  res.render('index')
+  Todo
+    .find()
+    .lean()
+    .then(todos => {
+      res.render('index', { todos })
+    })
+    .catch(error => console.error(error))
 })
 
 app.listen(port, () => {
