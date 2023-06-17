@@ -59,6 +59,13 @@ app.post('/todos', (req, res) => {
   //         .catch(error => console.error(error))
 })
 
+app.get('/todos/:id', (req, res) => {
+  const id = req.params.id
+  return Todo.findById(id)
+          .lean()
+          .then(todo => res.render('details', { todo }))
+})
+
 app.listen(port, () => {
   console.log(`Express is listening on localhost:${port}`)
 })
