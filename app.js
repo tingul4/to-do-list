@@ -25,7 +25,11 @@ app.use(bodyParser.urlencoded({ extended : true }))
 app.use(methodOverride('_method')) // 設定每一筆請求都會透過 methodOverride 進行前置處理
 
 usePassport(app)
-
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.user = req.user
+  next()
+})
 app.use(routes) // 將 request 導入路由器
 
 app.listen(PORT, () => {
