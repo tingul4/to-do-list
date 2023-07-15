@@ -5,6 +5,7 @@ const methodOverride = require('method-override')
 const session = require('express-session')
 
 const routes = require('./routes') // 引用路由器
+const usePassport = require('./config/passport')
 require('./config/mongoose')
 const PORT = process.env.PORT || 3000
 
@@ -16,6 +17,7 @@ app.set('view engine', 'hbs')
 
 app.use(bodyParser.urlencoded({ extended : true }))
 app.use(methodOverride('_method')) // 設定每一筆請求都會透過 methodOverride 進行前置處理
+usePassport(app)
 app.use(routes) // 將 request 導入路由器
 app.use(session({
   secret: 'ThisIsMySecret',
